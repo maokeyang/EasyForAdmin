@@ -1,0 +1,159 @@
+%%?php $this->setLayout('main');?%%
+%%?php $this->block('title');echo $title.'管理';$this->endBlock('title');?%%
+%%?php $this->block('buttons');?%%
+<?php if(empty($is_readonly)){?>
+<input type="button" class="btn btn-info" value="添加" onclick="location.replace('?mod=<?php echo $mod;?>&act=<?php echo $file_name;?>_edit');"/>
+<?php }?>
+%%?php $this->endBlock('buttons');?%%
+%%?php $this->block('navigation');?%%
+<ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-home"></i> 首页</a></li>
+    <li><a href="#">%%?php echo $parent_menu;?%%</a></li>
+    <li class="active">%%?php echo $current_menu;?%%</li>
+</ol>
+%%?php $this->endBlock('navigation');?%%
+%%?php $this->block('pager');?%%
+%%?php echo $page;?%%
+%%?php $this->endBlock('pager');?%%    
+%%?php $this->block('pager_length');?%%  
+%%?php echo $pager_limit;?%%
+<script>
+$('#sel_limit').val('%%?php echo $limit;?%%');
+</script>
+%%?php $this->endBlock('pager_length');?%%
+%%?php $this->block('content');?%%
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div style="padding-top:15px;padding-bottom:15px; background-color:#f4f4f5;" class="box-header with-border">
+                <form method="post">
+                    <?php
+                    if(!isset($Field)){
+                        $Field = array();
+                    }
+                    if(!isset($Like_Field)){
+                        $Like_Field = array();
+                    }
+                    $search_field = array_merge($Field, $Like_Field);
+                    foreach($search_field as $k=>$v){?>
+                    <?php if(!isset($is_time[$k])){?>
+
+                    <div style="padding:0px;margin-right:10px;" class="col-xs-2">
+                        <?php if(isset($type_arr_key[$k])){?>
+                        %%?php echo $input_<?php echo $k;?>_arr;?%%<?php }else{?>
+                        <input type="text" placeholder="<?php echo $Comment[$k]?>" class="form-control pull-right" value="%%?php echo $this->_input['kw']['<?php echo $v;?>'];?%%" name="kw[<?php echo $v;?>]" />
+                        <?php } ?>
+                    </div>
+                    <?php }}
+
+                    foreach($search_field as $k=>$v){?>
+                    <?php if(isset($is_time[$k])){?>
+
+                    <div class="col-xs-2">
+                        <div class="input-group">
+                            <div class="input-group-addon"> <i class="fa fa-calendar"></i> </div>
+                            <input id='kwDateBegin' type="text" value="%%?php echo $this->_input['kw']['start_time'];?%%" name="kw[start_time]" class="form-control pull-right" placeholder="开始日期"/>
+                        </div>
+                    </div>
+                    <div style="float:left;padding: 6px 0px;">--</div>
+                    <div class="col-xs-2">
+                        <div class="input-group">
+                            <div class="input-group-addon"> <i class="fa fa-calendar"></i> </div>
+                            <input id='kwDateEnd' type="text" value="%%?php echo $this->_input['kw']['end_time'];?%%" name="kw[end_time]" class="form-control pull-right" placeholder="结束日期"/>
+                        </div>
+                    </div>
+                    <?php }}?>
+
+                    <div class="col-xs-1">
+                        <button type="submit" class="btn btn-info">查看</button>
+                    </div>
+                    <div class="col-xs-1" style="float: right;">
+                        %%?php $this->loadBlock('buttons')?%%
+                    </div>
+                    <?php /*if($remark){echo '&nbsp;说明：'.$remark;}*/?>
+                </form>
+            </div>
+            <div class="box-body">
+                <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-bordered table-striped dataTable no-footer" id="example1" role="grid" aria-describedby="example1_info">
+                                <thead>
+                                    <tr role="row">
+                                        <?php 
+                                        foreach($list as $k=>$v){
+                                        if(empty($name_table[$k])){?>
+
+                                        <th class="%%?php echo $this->get_sorting('<?php echo $k;?>');?%%" order_by="<?php echo $k;?>" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-sort="ascending" aria-label="<?php echo $Comment[$k]?>: activate to sort column descending"><?php echo $Comment[$k]?></th>
+                                        <?php }else{?>
+
+                                        <th class="" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-label="<?php echo $Comment[$k]?>: activate to sort column ascending"><?php echo $Comment[$k]?></th>
+                                        <?php }?>
+                                        <?php }?>
+                                        <?php if(!isset($is_readonly)){ ?>
+                                        <th class="" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="width: 70px;" aria-label="操作: activate to sort column ascending">操作</th>
+                                        <?PHP } ?>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                %%?php if($data){ ?%%
+                                %%?php foreach($data as $k=>$v){?%%
+                                <tr role="row" class="%%?php echo $k%2?'odd':'even'?%%">
+                                    <?php 
+                                    $i = 0;
+                                    foreach($list as $k=>$v){
+                                    $sorting_1 = $i?'':' class="sorting_1"';
+                                    //$i++;
+                                    ?>
+                                    <?php if(!isset($from_unix_time[$k])){?>
+                                    <?php if(isset($type_arr_key[$k])){?>
+
+                                    <td<?php echo $sorting_1;?>><span class="label label-%%?php echo $this->getMultiCss($v['<?php echo $v;?>']);?%%">%%?php echo $this-><?php echo $k;?>_arr[$v['<?php echo $v;?>']];?%%</span></td>
+                                    <?php }else{?>
+                                    <?php if($name_table[$k]){?>
+
+                                    <td<?php echo $sorting_1;?>>%%?php echo $this-><?php echo $name_table[$k];?>_getter->get_name($v['<?php echo $v;?>']);?%%</td>
+                                    <?php }else{?>
+
+                                    <td<?php echo $sorting_1;?>>%%?php echo $v['<?php echo $v;?>'];?%%</td>
+                                    <?php } }       
+                                    }else{?>
+
+                                    <td<?php echo $sorting_1;?>>%%?php echo $v['<?php echo $v;?>']?date('Y-m-d H:i:s',$v['<?php echo $v;?>']):'';?%%</td>
+                                    <?php }}?>
+                                    <?php if(!isset($is_readonly)){ ?>
+                                    <td>
+                                        <a class="btn btn-success btn-xs" href="?mod=<?php echo $mod;?>&act=<?php echo $file_name;?>_edit&do=edit&<?php echo $key_field;?>=%%?php echo $v[<?php echo $key_field;?>];?%%">编辑</a>
+                                        <a class="btn btn-warning btn-xs" href="javascript:void(0);" onclick="confirmDel('%%?php echo $v['<?php echo $key_field;?>'];?%%');">删除</a>
+                                    </td>
+                                    <?PHP } ?>
+                                </tr>
+                                %%?php }?%%
+                                %%?php }else{ ?%%
+                                <!--tr><td colspan="30" <?php echo $sorting_1;?>>暂无数据..</td></tr -->
+                                %%?php } ?%%
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-7"></div>
+                    </div>
+                </div>
+            </div>	
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+%%?php $this->endBlock('content');?%%
+%%?php $this->block('script');?%%
+<script>
+function confirmDel(_id){
+    if(confirm('确定删除吗')){
+        location.href='?mod=<?php echo $mod;?>&act=<?php echo $file_name;?>_delete&<?php echo $key_field;?>='+_id
+    }
+}
+</script>
+%%?php $this->endBlock('script');?%%

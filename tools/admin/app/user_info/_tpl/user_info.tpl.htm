@@ -1,0 +1,117 @@
+<?php $this->setLayout('main');?>
+<?php $this->block('title');echo $title.'管理';$this->endBlock('title');?>
+<?php $this->block('buttons');?>
+<?php $this->endBlock('buttons');?>
+<?php $this->block('navigation');?>
+<ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-home"></i> 首页</a></li>
+    <li><a href="#"><?php echo $parent_menu;?></a></li>
+    <li class="active"><?php echo $current_menu;?></li>
+</ol>
+<?php $this->endBlock('navigation');?>
+<?php $this->block('content');?>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div style="padding-top:15px;padding-bottom:15px; background-color:#f4f4f5;" class="box-header with-border">
+                <!--添加渠道游戏搜索框-->
+                <?php include APP_DIR.'/_layout/search.layout.htm';?>
+
+                <div style="padding:0px;margin-right:10px;width:160px" class="col-xs-2">
+                    <input type="text" placeholder="账号名" class="form-control pull-right" value="<?php echo $this->_input['kw']['uname'];?>" name="kw[uname]" />
+                </div>
+                <div class="col-xs-2">
+                    <div class="input-group">
+                        <div class="input-group-addon"> <i class="fa fa-calendar"></i> </div>
+                        <input id='kwDateBegin' type="text" value="<?php echo $this->_input['kw']['start_time'];?>" name="kw[start_time]" class="form-control pull-right" placeholder="开始日期"/>
+                    </div>
+                </div>
+                <div style="float:left;padding: 6px 0px;">--</div>
+                <div class="col-xs-2">
+                    <div class="input-group">
+                        <div class="input-group-addon"> <i class="fa fa-calendar"></i> </div>
+                        <input id='kwDateEnd' type="text" value="<?php echo $this->_input['kw']['end_time'];?>" name="kw[end_time]" class="form-control pull-right" placeholder="结束日期"/>
+                    </div>
+                </div>
+
+                <div class="col-xs-1">
+                    <button  s type="button" class="btn btn-info" onclick="javascript:getData();">查看</button>
+                </div>
+                <div class="col-xs-1" style="float:left">
+                    <button  type="button" class="btn btn-info" onclick="javascript:exportData();">导出</button>
+                </div>
+
+            </div>
+            <div id="div_loading" class="box box-info" style="display:none;">
+                <div class="box-header">
+                </div>
+                <div class="box-body">
+                </div>
+                <!-- /.box-body -->
+                <!-- Loading (remove the following to stop the loading)-->
+                <div class="overlay">
+                    <i class="fa fa-refresh fa-spin"></i>
+                </div>
+                <!-- end loading -->
+            </div>
+            <div  id="div_sub" class="box-body">
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+<?php $this->endBlock('content');?>
+<?php $this->block('script');?>
+<script>
+function getData(){
+    var _page=arguments[0]?arguments[0]:0;
+    var _url = '?mod=user_info&act=user_info&is_ajax=1';
+    var _callback = function(){
+        $('th.sorting,th.sorting_asc,th.sorting_desc').each( function(){
+            $(this).unbind().bind('click', function(){ 
+                $($(this).siblings()).attr("class", "");
+                if($(this).attr('class') == 'sorting_asc'){
+                    $(this).attr('class', 'sorting_desc');
+                }else{
+                    $(this).attr('class', 'sorting_asc');
+                }
+                getData();
+            });
+        });
+    }
+    getTableData(_url, _page, _callback);
+}
+
+function exportData(){
+    var _data = {};
+    $(".form-control.pull-right").each(function(){
+        _data[$(this).attr('name')] = $(this).val();
+    });
+    $.ajax({
+        type: "post",
+        url: '?mod=user_info&act=user_info&is_ajax=1&is_export=1',
+        dataType:'text',
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",   
+        data:_data,
+        beforeSend: function(XMLHttpRequest){
+            $('#div_loading').show();
+            $('#div_sub').hide();
+        },
+        complete: function(XMLHttpRequest, flagOK){
+            $('#div_loading').hide();
+            $('#div_sub').show();
+        },
+        error : function(XMLHttpRequest, textStatus, errorThrown){
+            alert(errorThrown);
+        },
+        success: function(data, textStatus, XMLHttpRequest){
+            //alert($.toJSON(data));
+            $('#div_sub').html(data);
+            page('example1', [20,30,50,-1],[20,30,50,"所有"]);
+        }
+    });
+}
+
+</script>
+<?php $this->endBlock('script');?>

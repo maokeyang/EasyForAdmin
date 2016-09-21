@@ -1,0 +1,71 @@
+%%?php $this->setLayout('main');?%%
+%%?php $this->block('title');echo $title;$this->endBlock('title');?%%
+%%?php $this->block('navigation');?%%
+<ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-home"></i> 首页</a></li>
+    <li><a href="#">%%?php echo $parent_menu;?%%</a></li>
+    <li class="active">%%?php echo $current_menu;?%%</li>
+</ol>
+%%?php $this->endBlock('navigation');?%%
+%%?php $this->block('content');?%%
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div style="padding-top:20px;" class="box-body">
+                <form class="form-horizontal" method="post">
+                    <input type="hidden" name="title" value="%%?php echo $title;?%%"/>    
+                    <?php foreach($input as $k=>$v){?>
+                    <?php if($v=='noinput'){
+                    continue;
+                    }else if($v=='hidden'){?>            
+                    <input type="hidden" name="data[<?php echo $k;?>]" value="%%?php echo $data['<?php echo $k;?>']?%%"/>
+                    <?php }else {?> 
+                    <div class="form-group">
+                        <?php if($v=='text'){?>   
+                        <label class="col-sm-2 control-label" for="text_<?php echo $k;?>"><?php echo isset($nullable[$k])?'<span class="txt-impt">*</span>':'';?><?php echo $Comment[$k]?>:</label>
+                        <div class="col-sm-6">             
+                            <input id="text_<?php echo $k;?>" class="form-control" type="text" name="data[<?php echo $k;?>]" value="%%?php echo <?php if(isset($from_unix_time[$k])){?>$data['<?php echo $k;?>']?date('Y-m-d H:i:s',$data['<?php echo $k;?>']):'';<?php }else{ ?> $data['<?php echo $k;?>']<?php }?>?%%"/><span class="txt-impt">%%?php echo $emsg['<?php echo $k;?>']?%%</span>
+                        <?php }else if($v=='checkbox'){?>    
+                        <label class="col-sm-2 control-label" for="chk_<?php echo $k;?>"><?php echo isset($nullable[$k])?'<span class="txt-impt">*</span>':'';?><?php echo $Comment[$k]?>:</label>
+                        <div class="col-sm-6">             
+                            <input id="checkbox_<?php echo $k;?>" class="form-control" type="checkbox" name="data[<?php echo $k;?>]"/>
+                        <?php }else if($v=='select'){
+                            if(isset($type_arr_key[$k])){ ?>
+
+                        <label class="col-sm-2 control-label" for="sel_<?php echo $k;?>"><?php echo isset($nullable[$k])?'<span class="txt-impt">*</span>':'';?><?php echo $Comment[$k]?>:</label>
+                        <div class="col-sm-6"> 
+                            %%?php echo $input_<?php echo $k;?>_arr?%%<span class="txt-impt">%%?php echo $emsg['<?php echo $k;?>']?%%</span>
+<?php }?>
+                        <?php }else if($v=='textarea'){?>   
+                        <label class="col-sm-2 control-label" for="tta_<?php echo $k;?>"><?php echo isset($nullable[$k])?'<span class="txt-impt">*</span>':'';?><?php echo $Comment[$k]?>:</label>
+                        <div class="col-sm-6">              
+                            <textarea id="tta_<?php echo $k;?>" class="form-control" name="data[<?php echo $k;?>]">%%?php echo $data['<?php echo $k;?>']?%%</textarea><span class="txt-impt">%%?php echo $emsg['<?php echo $k;?>']?%%</span><?php }?>
+
+                        </div>
+                    </div>      
+                    <?php }}?>    
+                    %%?php echo $do;?%%
+
+                    <div class="box-footer">
+                        <div class="col-sm-2"></div>
+                        <button class="btn btn-info" type="submit" name="submit">提交</button>
+                        <button type="button" class="btn btn-default" onclick="location.replace('%%?php echo Act_<?php echo $class_name;?>_edit::GO_BACK?%%');">返回</button>
+                    </div>
+                <!-- /.box-footer -->
+                </form>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+%%?php $this->endBlock('content');?%%
+%%?php $this->block('script');?%%
+<?php if(isset($is_time)){
+foreach($is_time as $k=>$v){
+if($input[$k]!='noinput'){?>
+<script>
+$('input[name="data[<?php echo $k?>]"]').datepick();
+</script>
+<?php }}}?>
+%%?php $this->endBlock('script');?%%

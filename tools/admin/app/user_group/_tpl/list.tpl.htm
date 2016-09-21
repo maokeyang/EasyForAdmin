@@ -1,0 +1,73 @@
+<?php $this->setLayout('main');?>
+<?php $this->block('title');echo $title.'管理';$this->endBlock('title');?>
+<?php $this->block('buttons');?>
+<?php $this->endBlock('buttons');?>
+<?php $this->block('navigation');?>
+
+<?php $this->endBlock('navigation');?>
+<?php $this->block('content');?>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div style="padding-top:15px;padding-bottom:15px; background-color:#f4f4f5;" class="box-header with-border">
+                
+                <div class="col-xs-1" style="float:right">
+                    <button type="button" class="btn btn-info" onclick="location.replace('?mod=user_group&act=add');">添加</button>
+                </div>
+                <div class="col-xs-1" style="float: right;">
+                    <?php $this->loadBlock('buttons')?>
+                </div>
+                
+            </div>
+            <div id="div_loading" class="box box-info" style="display:none;">
+                <div class="box-header">
+                </div>
+                <div class="box-body">
+                </div>
+                <!-- /.box-body -->
+                <!-- Loading (remove the following to stop the loading)-->
+                <div class="overlay">
+                    <i class="fa fa-refresh fa-spin"></i>
+                </div>
+                <!-- end loading -->
+            </div>
+            <div  id="div_sub" class="box-body">
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+<?php $this->endBlock('content');?>
+<?php $this->block('script');?>
+<script>
+function confirmDel(gid){
+    if(confirm('确定删除吗')){
+            location.href='?mod=user_group&act=delete&gid='+gid
+    }
+}
+function getData(){
+    var _page=arguments[0]?arguments[0]:0;
+    var _url = '?mod=user_group&act=list&is_ajax=1';
+    var _callback = function(){
+        $('th.sorting,th.sorting_asc,th.sorting_desc').each( function(){
+            $(this).unbind().bind('click', function(){ 
+                $($(this).siblings()).attr("class", "");
+                if($(this).attr('class') == 'sorting_asc'){
+                    $(this).attr('class', 'sorting_desc');
+                }else{
+                    $(this).attr('class', 'sorting_asc');
+                }
+                getData();
+            });
+        });
+    }
+    getTableData(_url, _page, _callback);
+}
+
+$(function(){
+    getData();       
+});
+
+</script>
+<?php $this->endBlock('script');?>

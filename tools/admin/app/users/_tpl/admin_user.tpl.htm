@@ -1,0 +1,96 @@
+<?php $this->setLayout('main');?>
+<?php $this->block('title');echo $title.'管理';$this->endBlock('title');?>
+<?php $this->block('buttons');?>
+<input type="button" class="btn btn-info" value="添加" onclick="location.replace('?mod=users&act=admin_user_edit');"/>
+<?php $this->endBlock('buttons');?>
+<?php $this->block('navigation');?>
+<ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-home"></i> 首页</a></li>
+    <li><a href="#"><?php echo $parent_menu;?></a></li>
+    <li class="active"><?php echo $current_menu;?></li>
+</ol>
+<?php $this->endBlock('navigation');?>
+<?php $this->block('content');?>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div style="padding-top:15px;padding-bottom:15px; background-color:#f4f4f5;" class="box-header with-border">
+                                
+                <div style="padding:0px;margin-right:10px;" class="col-xs-2">
+                                        <input type="text" placeholder="登录名" class="form-control pull-right" value="<?php echo $this->_input['kw']['user_name'];?>" name="kw[user_name]" />
+                </div>
+                                
+                <div style="padding:0px;margin-right:10px;" class="col-xs-2">
+                                        <input type="text" placeholder="真实姓名" class="form-control pull-right" value="<?php echo $this->_input['kw']['true_name'];?>" name="kw[true_name]" />
+                                    </div>
+                                                
+                <div class="col-xs-1">
+                    <button type="button" class="btn btn-info" onclick="javascript:getData();">查看</button>
+                </div>
+                <div class="col-xs-1" style="float: right;">
+                    <?php $this->loadBlock('buttons')?>
+                </div>
+                
+            </div>
+            <div id="div_loading" class="box box-info" style="display:none;">
+                <div class="box-header">
+                </div>
+                <div class="box-body">
+                </div>
+                <!-- /.box-body -->
+                <!-- Loading (remove the following to stop the loading)-->
+                <div class="overlay">
+                    <i class="fa fa-refresh fa-spin"></i>
+                </div>
+                <!-- end loading -->
+            </div>
+            <div  id="div_sub" class="box-body">
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+<?php $this->endBlock('content');?>
+<?php $this->block('script');?>
+<script>
+function confirmDisable(_id){
+    if(confirm('确定禁用此账号吗')){
+        location.href='?mod=users&act=admin_user_delete&do=disable&user_id='+_id
+    }
+}
+function confirmEnable(_id){
+    if(confirm('确定启用此账号吗')){
+        location.href='?mod=users&act=admin_user_delete&do=enable&user_id='+_id
+    }
+}
+function confirmDel(_id){
+    if(confirm('确定删除此账号吗')){
+        location.href='?mod=users&act=admin_user_delete&do=delete&user_id='+_id
+    }
+}
+function getData(){
+    var _page=arguments[0]?arguments[0]:0;
+    var _url = '?mod=users&act=admin_user&is_ajax=1';
+    var _callback = function(){
+        $('th.sorting,th.sorting_asc,th.sorting_desc').each( function(){
+            $(this).unbind().bind('click', function(){ 
+                $($(this).siblings()).attr("class", "");
+                if($(this).attr('class') == 'sorting_asc'){
+                    $(this).attr('class', 'sorting_desc');
+                }else{
+                    $(this).attr('class', 'sorting_asc');
+                }
+                getData();
+            });
+        });
+    }
+    getTableData(_url, _page, _callback);
+}
+
+$(function(){
+    getData();       
+});
+
+</script>
+<?php $this->endBlock('script');?>

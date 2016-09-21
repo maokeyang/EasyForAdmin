@@ -1,0 +1,116 @@
+<?php $this->setLayout('main');?>
+
+<?php $this->block('title');?>编辑帐号资料<?php $this->endBlock('title');?>
+
+<?php $this->block('content');?>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div style="padding-top:20px;" class="box-body">
+<div class="tableWrapper">
+    <form method="post">
+        <table class="grid">
+			<tr>
+                <td class="sorting_1"><span class="red pd_10">*</span>帐号名称：</td>
+                <td><input disabled type="text" class="form-control" name="items[username]" value="<?php echo $items['username'] ?>" /><?php echo $emsg['username'] ?></td>
+                <input type="hidden" name="items[user_id]" value="<?php echo $items['user_id']?>">
+			</tr>
+            <tr>
+                <td class="sorting_1"><span class="red pd_10">*</span>真实姓名：</td>
+                <td><input type="text" class="form-control" name="items[name]" value="<?php echo $items['name'] ?>" /><?php echo $emsg['name']?></td>
+            </tr>
+            <tr>
+                <td class="sorting_1"><span class="red pd_10">*</span>所属用户组：</td>
+                <td>
+                    <?php echo $items['gid']?><?php echo $emsg['gid']?>
+                </td>
+            </tr>
+            <tr>
+                <td class="sorting_1">密　　码：</td>
+                <td><input type="password" class="form-control" name="items[passwd]" /></td>
+            </tr>
+            <tr>
+                <td class="sorting_1">确认密码：</td>
+                <td><input type="password" class="form-control" name="items[passwd1]" /><?php echo $emsg['passwd'] ?></td>
+            </tr>
+			<tr>
+                <td class="sorting_1">账号状态：</td>
+                <td>
+                    <?php echo $items['status']?><?php echo $emsg['status']?>
+                </td>
+            </tr>
+			<tr>
+                <td class="sorting_1">用户类型：</td>
+                <td>
+                    <?php echo $items['type']?><?php echo $emsg['type']?>
+                </td>
+            </tr>
+			<tr>
+                <td class="sorting_1">员工工号：</td>
+                <td><input type="text" name="items[job_no]" class="form-control" value="<?php echo $items['job_no'] ?>" /><?php echo $emsg['job_no']?></td>
+            </tr>
+            <tr>
+                <td class="sorting_1">渠道编号：</td>
+                <td><input type="text" name="items[channel_code]" class="form-control" value="<?php echo $items['channel_code'] ?>" /><?php echo $emsg['channel_code']?></td>
+            </tr>
+			<tr>
+                <td class="sorting_1">昵称：</td>
+                <td><input type="text" name="items[nick_name]" class="form-control" value="<?php echo $items['nick_name'] ?>" /><?php echo $emsg['nick_name']?></td>
+            </tr>
+			<tr>
+                <td class="sorting_1">性别：</td>
+				<td>
+                    <?php echo $items['sex']?><?php echo $emsg['sex']?>
+                </td>
+            </tr>
+			<tr>
+                <td class="sorting_1">身份证号：</td>
+                <td><input type="text" name="items[id_no]" class="form-control" value="<?php echo $items['id_no'] ?>" /><?php echo $emsg['id_no']?></td>
+            </tr>
+			<tr>
+                <td class="sorting_1">联系电话：</td>
+                <td><input type="text" name="items[phone]" class="form-control" value="<?php echo $items['phone'] ?>" /><?php echo $emsg['phone']?></td>
+            </tr>
+			<tr>
+                <td class="sorting_1">qq：</td>
+                <td><input type="text" name="items[qq]" class="form-control" value="<?php echo $items['qq'] ?>" /><?php echo $emsg['qq']?></td>
+            </tr>
+			<tr>
+                <td class="sorting_1">rtx号：</td>
+                <td><input type="text" name="items[rtx]" class="form-control" value="<?php echo $items['rtx'] ?>" /><?php echo $emsg['rtx']?></td>
+            </tr>
+			<tr>
+                <td class="sorting_1">msn：</td>
+                <td><input type="text" name="items[msn]" class="form-control" value="<?php echo $items['msn'] ?>" /><?php echo $emsg['msn']?></td>
+            </tr>
+			<tr>
+                <td class="sorting_1">公司email账号：</td>
+                <td><input type="text" name="items[email]" class="form-control" value="<?php echo $items['email'] ?>" /><?php echo $emsg['email']?></td>
+            </tr>
+			<tr>
+                <td class="sorting_1">所属部门：</td>
+                <td><input type="text" name="items[department]" class="form-control" value="<?php echo $items['department'] ?>" /><?php echo $emsg['department']?></td>
+            </tr>
+			<tr>
+                <td class="sorting_1">入职日期：</td>
+                <td><input type="text" name="items[entry_time]" class="form-control" value="<?php echo $items['entry_time']?>" id="entry_time" /><?php echo $emsg['entry_time']?></td>
+            </tr>
+			<tr>
+                <td class="sorting_1">备注：</td>
+                <td><input type="text" name="items[remark]" class="form-control" value="<?php echo $items['remark'] ?>" /><?php echo $emsg['remark']?></td>
+            </tr>
+            <tr>
+                <td class="sorting_1"></td>
+                <td>
+                    <input type="submit" name="submit" class="bigBtn" value="提交" />
+                    <input type="button" class="bigBtn" value="返回" onclick="location.replace('<?php echo $goback?>');" />
+					<span class="red">（*号必填）</span>
+				</td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script>
+	$('#entry_time').datepick(); 
+</script>
+<?php $this->endBlock('content');?>

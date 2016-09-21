@@ -1,0 +1,92 @@
+<?php $this->setLayout('main');?>
+<?php $this->block('title');echo $title;$this->endBlock('title');?>
+<?php $this->block('content');?>
+
+<div class="tableWrapper">
+    <p class="err"><?php echo $message; ?></p>
+    <form method="post">
+
+        <table class="table table-bordered  dataTable no-footer">
+			<tr>
+				<td class="label_center" style="text-align:center;"><span class="label label-success">用户组名称</span></td>
+				<td colspan=3><input type="text" name="items[group_name]" value="<?php echo $items['group_name'] ?>" /><?php echo $emsg['group_name'] ?></td>
+				<input type="hidden" id="ids" name="items[ids]"/>
+			</tr>
+			<tr>
+				<td class="label_center" style="text-align:center;"><span class="label label-success">快捷选择</span></td>
+				<td>
+					<input type="checkbox" onclick="check_all(this);set_value();"/><span class="label label-warning">全选</span>
+					<input type="checkbox" onclick="check_reverse(this);set_value();"/><span class="label label-info">反选</span>
+				</td>
+			</tr>
+			<tr>
+				<?php
+					foreach($menu as $mkey => $mvalue):
+				?>
+				<tr>
+					<td class="label_center"  style="display:table-cell; vertical-align:middle; text-align:center;" >
+						<input type="checkbox" onclick="check_group(this,'<?php echo $mkey.'_';?>');set_value();"/>
+						<span class="label label-success"><?php echo $mvalue['title'];?></span>
+					</td>
+					<td>
+						<table class="table table-bordered dataTable">
+						<?php foreach($mvalue['sub'] as $skey => $svalue): ?>
+						<tr><td>
+						<input onclick="check_select(this,'<?php echo $mkey.'_'.$skey;?>');set_value();" type="checkbox" name="boxIds" id="<?php echo $mkey.'_'.$skey;?>" value="<?php echo $mkey.'_'.$skey;?>"/>
+						<?php echo $svalue['title'];?>
+						<br>
+							<?php if(isset($svalue['sub'])){?>
+								<?php foreach($svalue['sub'] as $ckey => $cvalue):?>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<input onclick="check_select(this,'<?php echo $mkey.'_'.$skey.'_'.$ckey;?>');set_value();" type="checkbox" name="boxIds" id="<?php echo $mkey.'_'.$skey.'_'.$ckey;?>" value="<?php echo $mkey.'_'.$skey.'_'.$ckey;?>" />
+									<?php echo $cvalue['title'];?>
+								<?php endforeach;?>
+							<br>
+							<?php }?>
+						</td></tr>
+						<?php endforeach;?>
+						</table>
+					</td>
+				</tr>
+				<?php endforeach;?>
+			</tr>
+        </table>
+
+        <div class="box-footer">
+            <div class="col-sm-2"></div>
+	            <button class="btn btn-info" type="submit" name="submit">提交</button>
+	            &nbsp; &nbsp; &nbsp;
+	            <button type="button" class="btn btn-info" onclick="history.go(-1)">返回</button>
+		</div>
+    </form>
+</div>
+<script>
+	var ids = [];//存储选中的id
+	
+	function check_group(obj,menu_key){
+		var checkboxs = document.getElementsByName('boxIds');
+		for(var i = 0;i<checkboxs.length;i++){
+			if(checkboxs[i].id.indexOf(menu_key) == 0){
+				checkboxs[i].checked = obj.checked;
+				//判断元素是否存在数组中
+				var index = array_index_off(ids,checkboxs[i].value);
+				if(checkboxs[i].checked){
+					//添加数组元素
+					if(index <= -1){
+						ids.push(checkboxs[i].value);
+					}
+				}else{
+					//删除数组元素
+					if(index > -1){
+						ids.splice(index,1);
+					}
+				}
+			}
+		}
+	}
+	
+	function set_value(){
+		document.getElementById('ids').value = ids;
+	}
+</script>
+<?php $this->endBlock('content');?>

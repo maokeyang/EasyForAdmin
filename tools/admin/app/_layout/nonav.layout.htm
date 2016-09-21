@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php $this->loadBlock('title');?> -</title>
+<link rel="stylesheet" type="text/css" href="style/admin.css" />
+<script type="text/javascript" src="style/js/jquery.js"></script>
+<script type="text/javascript" src="style/admin.js"></script>
+<script type="text/javascript" src="style/gridview.js"></script>
+<link rel="stylesheet" type="text/css" href="style/datepick/redmond.datepick.css" />
+<script type="text/javascript" src="style/datepick/jquery.datepick.js"></script>
+<script type="text/javascript" src="style/datepick/jquery.datepick-zh-CN.js"></script>
+<?php $this->loadBlock('header'); ?>
+</head>
+<body style="background:none;">
+<div id="wrapper">
+    <div id="mContent" style="margin:0;">
+        <div class="title"><?php $this->loadBlock('title'); ?></div>
+        <?php $this->loadBlock('content'); ?>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<?php $this->setLayout('main');?>
+<?php $this->block('title');echo $title;$this->endBlock('title');?>
+<?php $this->block('navigation');?>
+<ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-home"></i> 首页</a></li>
+    <li><a href="#"><?php echo $parent_menu;?></a></li>
+    <li class="active"><?php echo $current_menu;?></li>
+</ol>
+<?php $this->endBlock('navigation');?>
+<?php $this->block('content');?>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div style="padding-top:20px;" class="box-body">
+                <form class="form-horizontal" method="post">
+                    <input type="hidden" name="title" value="<?php echo $title;?>"/>    
+
+                    <input type="hidden" name="data[id]" value="<?php echo $data['id']?>"/>
+
+                    <div class="form-group">
+
+                        <label class="col-sm-2 control-label" for="text_mode_code"><span class="txt-impt">*</span>登录缩写:</label>
+                        <div class="col-sm-6">             
+                            <input id="text_mode_code" class="form-control" type="text" name="data[mode_code]" value="<?php echo  $data['mode_code']?>"/><span class="txt-impt"><?php echo $emsg['mode_code']?></span>
+
+                        </div>
+                    </div>      
+
+                    <div class="form-group">
+
+                        <label class="col-sm-2 control-label" for="text_mode_name"><span class="txt-impt">*</span>登录名称:</label>
+                        <div class="col-sm-6">             
+                            <input id="text_mode_name" class="form-control" type="text" name="data[mode_name]" value="<?php echo  $data['mode_name']?>"/><span class="txt-impt"><?php echo $emsg['mode_name']?></span>
+
+                        </div>
+                    </div>      
+
+                    <div class="form-group">
+
+                        <label class="col-sm-2 control-label" for="text_login_range">适用地区</label>
+                        <div class="col-sm-6">             
+                            <select class="form-control" name="data[login_range]">
+                                <option value="0" <?php echo $data['login_range'] == 0 ? 'selected=selected' : '' ?> >通用</option>
+
+                                <option value="1" <?php echo $data['login_range'] == 1 ? 'selected=selected' : '' ?> >国内</option>
+
+                                <option value="2" <?php echo $data['login_range'] == 2 ? 'selected=selected' : '' ?> >国外</option>
+                            </select>
+                        </div>
+                    </div> 
+
+                    <div class="form-group">
+
+                        <label class="col-sm-2 control-label" for="sel_state">状态:</label>
+                        <div class="col-sm-6"> 
+                            <?php echo $input_state_arr?><?php echo $emsg['state']?>
+                        </div>
+                    </div>      
+
+                    <?php echo $do;?>
+
+                    <div class="box-footer">
+                        <div class="col-sm-2"></div>
+                        <button class="btn btn-info" type="submit" name="submit">提交</button>
+                        <button type="button" class="btn btn-default" onclick="location.replace('<?php echo Act_Login_Mode_edit::GO_BACK?>');">返回</button>
+                    </div>
+                    <!-- /.box-footer -->
+                </form>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+<?php $this->endBlock('content');?>
+<?php $this->block('script');?>
+<?php $this->endBlock('script');?>

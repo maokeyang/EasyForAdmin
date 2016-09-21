@@ -1,0 +1,85 @@
+<?php $this->block('pager');?>
+<?php echo $page;?>
+<?php $this->endBlock('pager');?>    
+<?php $this->block('pager_length');?>  
+<?php echo $pager_limit;?>
+<script>
+$('#sel_limit').val('<?php echo $limit;?>');
+</script>
+<?php $this->endBlock('pager_length');?>
+<div class="box-body">
+    <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+        <?php $this->loadBlock('pager_length');?>
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-bordered table-striped dataTable no-footer" id="example1" role="grid" aria-describedby="example1_info">
+                    <thead>
+                        <tr role="row">
+
+                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-sort="ascending" aria-label="一级游戏: activate to sort column descending">一级游戏</th>
+
+                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-label="二级游戏: activate to sort column ascending">二级游戏</th>
+
+                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-label="渠道: activate to sort column ascending">渠道</th>
+
+                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-label="账号id: activate to sort column ascending">账号id</th>
+
+                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-label="玩家账号: activate to sort column ascending">玩家账号</th>
+
+                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-label="创建时间: activate to sort column ascending">注册时间</th>
+
+                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-label="最后登陆时间: activate to sort column ascending">最后登陆时间</th>
+
+                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-label="注册IP: activate to sort column ascending">注册IP</th>
+
+                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-label="最后登陆IP: activate to sort column ascending">最后登陆IP</th>
+
+                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-label="充值金额: activate to sort column ascending">充值金额</th>                           
+
+                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-label="最后登陆时间: activate to sort column ascending">未登录天数</th>
+
+                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-label="未充值天数: activate to sort column ascending">未充值天数</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    <?php if($data){ ?>
+                    <?php foreach($data as $k=>$v){?>
+                    <tr role="row" class="<?php echo $k%2?'odd':'even'?>">
+                        <td class="sorting_1"><?php echo $game_data[$v['game_code']]['parent'] ? $parent_game[$game_data[$v['game_code']]['parent']] : '无';?></td>
+
+                        <td ><?php echo $game_data[$v['game_code']]['name'];?></td>       
+
+                        <td ><?php echo $channel_data[$v['channel_code']] ? $channel_data[$v['channel_code']] : $v['channel_code'];?></td>                                                            
+                        <td ><?php echo $v['uid'];?></td>  
+
+                        <td ><?php echo $v['uname'];?></td>  
+
+                        <td ><?php echo date('Y-m-d H:i:s',$v['ctime']);?></td>
+
+                        <td ><?php echo $v['last_login'] ? date('Y-m-d H:i:s',$v['last_login']) : '';?></td>
+
+                        <td ><?php echo $v['ip'];?></td>
+
+                        <td ><?php echo $v['last_login_ip'];?></td>          
+
+                        <td ><?php echo $v['total_charge'];?></td> 
+
+                        <td ><?php echo $v['last_login'] ? intval($v['not_login_days']) : '未登录';?></td>
+
+                        <td ><?php echo $v['last_charge_time'] ? intval($v['not_charge_days']) : '未充值';?></td>
+
+                    </tr>
+                    <?php }?>
+                    <?php }else{ ?>
+                    <tr class="odd"><td valign="top" colspan="30" class="dataTables_empty">暂无数据...</td></tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <?php $this->loadBlock('pager');?>
+    </div>
+</div>	
+<!-- /.box-body -->

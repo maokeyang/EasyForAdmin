@@ -1,0 +1,121 @@
+%%?php $this->setLayout('main');?%%
+%%?php $this->block('title');echo $title.'管理';$this->endBlock('title');?%%
+%%?php $this->block('buttons');?%%
+<?php if(empty($is_readonly)){?>
+<input type="button" class="btn btn-info" value="添加" onclick="location.replace('?mod=<?php echo $mod;?>&act=<?php echo $file_name;?>_edit');"/>
+<?php }?>
+%%?php $this->endBlock('buttons');?%%
+%%?php $this->block('navigation');?%%
+<ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-home"></i> 首页</a></li>
+    <li><a href="#">%%?php echo $parent_menu;?%%</a></li>
+    <li class="active">%%?php echo $current_menu;?%%</li>
+</ol>
+%%?php $this->endBlock('navigation');?%%
+%%?php $this->block('content');?%%
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div style="padding-top:15px;padding-bottom:15px; background-color:#f4f4f5;" class="box-header with-border">
+                <?php
+                if(!isset($Field)){
+                    $Field = array();
+                }
+                if(!isset($Like_Field)){
+                    $Like_Field = array();
+                }
+                $search_field = array_merge($Field, $Like_Field);
+                foreach($search_field as $k=>$v){?>
+                <?php if(!isset($is_time[$k])){?>
+
+                <div style="padding:0px;margin-right:10px;" class="col-xs-2">
+                    <?php if(isset($type_arr_key[$k])){?>
+                    %%?php echo $input_<?php echo $k;?>_arr;?%%<?php }else{?>
+                    <input type="text" placeholder="<?php echo $Comment[$k]?>" class="form-control pull-right" value="%%?php echo $this->_input['kw']['<?php echo $v;?>'];?%%" name="kw[<?php echo $v;?>]" />
+                    <?php } ?>
+                </div>
+                <?php }}
+                foreach($search_field as $k=>$v){?>
+                <?php if(isset($is_time[$k])){?>
+
+                <div class="col-xs-2">
+                    <div class="input-group">
+                        <div class="input-group-addon"> <i class="fa fa-calendar"></i> </div>
+                        <input id='kwDateBegin' type="text" value="%%?php echo $this->_input['kw']['start_time'];?%%" name="kw[start_time]" class="form-control pull-right" placeholder="开始日期"/>
+                    </div>
+                </div>
+                <div style="float:left;padding: 6px 0px;">--</div>
+                <div class="col-xs-2">
+                    <div class="input-group">
+                        <div class="input-group-addon"> <i class="fa fa-calendar"></i> </div>
+                        <input id='kwDateEnd' type="text" value="%%?php echo $this->_input['kw']['end_time'];?%%" name="kw[end_time]" class="form-control pull-right" placeholder="结束日期"/>
+                    </div>
+                </div>
+                <?php }}?>
+
+                <div class="col-xs-1">
+                    <button type="button" class="btn btn-info" onclick="javascript:getData();">查看</button>
+                </div>
+                <div class="col-xs-1" style="float: right;">
+                    %%?php $this->loadBlock('buttons')?%%
+                </div>
+                <?php /*if($remark){echo '&nbsp;说明：'.$remark;}*/?>
+
+            </div>
+            <div id="div_loading" class="box box-info" style="display:none;">
+                <div class="box-header">
+                </div>
+                <div class="box-body">
+                </div>
+                <!-- /.box-body -->
+                <!-- Loading (remove the following to stop the loading)-->
+                <div class="overlay">
+                    <i class="fa fa-refresh fa-spin"></i>
+                </div>
+                <!-- end loading -->
+            </div>
+            <div  id="div_sub" class="box-body">
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+%%?php $this->endBlock('content');?%%
+%%?php $this->block('script');?%%
+<script>
+<?php if(empty($is_readonly)){ ?>
+function confirmDel(_id){
+    if(confirm('确定删除吗')){
+        location.href='?mod=<?php echo $mod;?>&act=<?php echo $file_name;?>_delete&<?php echo $key_field;?>='+_id
+    }
+}
+<?php } ?>
+function getData(){
+    var _page=arguments[0]?arguments[0]:0;
+    var _url = '?mod=<?php echo $mod;?>&act=<?php echo $file_name;?>&is_ajax=1';
+    var _callback = function(){
+        $('th.sorting,th.sorting_asc,th.sorting_desc').each( function(){
+            $(this).unbind().bind('click', function(){ 
+                $($(this).siblings()).attr("class", "");
+                if($(this).attr('class') == 'sorting_asc'){
+                    $(this).attr('class', 'sorting_desc');
+                }else{
+                    $(this).attr('class', 'sorting_asc');
+                }
+                getData();
+            });
+        });
+    }
+    getTableData(_url, _page, _callback);
+}
+<?php
+if(isset($is_ajax_now)){?>
+
+$(function(){
+    getData();       
+});
+<?php } ?>
+
+</script>
+%%?php $this->endBlock('script');?%%

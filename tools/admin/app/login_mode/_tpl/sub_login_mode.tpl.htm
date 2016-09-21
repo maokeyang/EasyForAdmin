@@ -1,0 +1,60 @@
+<?php $this->block('pager');?>
+<?php echo $page;?>
+<?php $this->endBlock('pager');?>    
+<?php $this->block('pager_length');?>  
+<?php echo $pager_limit;?>
+<script>
+$('#sel_limit').val('<?php echo $limit;?>');
+</script>
+<?php $this->endBlock('pager_length');?>
+<div class="box-body">
+    <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+        <?php $this->loadBlock('pager_length');?>
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-bordered table-striped dataTable no-footer" id="example1" role="grid" aria-describedby="example1_info">
+                    <thead>
+                        <tr role="row">
+
+                            <th class="<?php echo $this->get_sorting('mode_code');?>" order_by="mode_code" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-sort="ascending" aria-label="登录缩写: activate to sort column descending">登录缩写</th>
+
+                            <th class="<?php echo $this->get_sorting('mode_name');?>" order_by="mode_name" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-sort="ascending" aria-label="登录名称: activate to sort column descending">登录名称</th>
+                            
+                            <th class="<?php echo $this->get_sorting('login_range');?>" order_by="login_range" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-sort="ascending" aria-label="适用地区: activate to sort column descending">适用地区</th>
+
+                            <th class="<?php echo $this->get_sorting('state');?>" order_by="state" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-sort="ascending" aria-label="状态: activate to sort column descending">状态</th>
+
+                            <th class="" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="width: 70px;" aria-label="操作: activate to sort column ascending">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    <?php if($data){ ?>
+                    <?php foreach($data as $k=>$v){?>
+                    <tr role="row" class="<?php echo $k%2?'odd':'even'?>">
+
+                        <td class="sorting_1"><?php echo $v['mode_code'];?></td>
+
+                        <td ><?php echo $v['mode_name'];?></td>
+
+                        <td ><?php echo $v['login_range'] == 0 ? '<span class="label label-success">通用</span>' : ($v['login_range'] == 1 ? '<span class="label label-info">国内</span>':'<span class="label label-warning">国外</span>') ?></td>
+
+                        <td ><span class="label label-<?php echo $this->getMultiCss($v['state']);?>"><?php echo $this->state_arr[$v['state']];?></span></td>
+                        <td>
+                            <a class="btn btn-success btn-xs" href="?mod=login_mode&act=login_mode_edit&do=edit&id=<?php echo $v[id];?>">编辑</a>
+                            <a class="btn btn-warning btn-xs" href="javascript:void(0);" onclick="confirmDel('<?php echo $v['id'];?>');">删除</a>
+                        </td>
+                    </tr>
+                    <?php }?>
+                    <?php }else{ ?>
+                    <!--tr><td colspan="30" >暂无数据..</td></tr -->
+                    <tr class="odd"><td valign="top" colspan="30" class="dataTables_empty">暂无数据...</td></tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <?php $this->loadBlock('pager');?>
+    </div>
+</div>	
+<!-- /.box-body -->

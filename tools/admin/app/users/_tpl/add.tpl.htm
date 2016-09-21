@@ -1,0 +1,105 @@
+<?php $this->setLayout('main');?>
+<?php $this->block('title');?>创建后台用户帐号<?php $this->endBlock('title');?>
+<?php $this->block('content');?>
+
+<div class="tableWrapper">
+    <p class="err"><?php echo $message; ?></p>
+    <form method="post">
+        <table class="grid">
+            <tr>
+                <td class="label"><span class="red pd_10">*</span>帐号名称：</td>
+                <td><input type="text" name="items[username]" value="<?php echo $items['username'] ?>" /><?php echo $emsg['username'] ?></td>
+            </tr>
+            <tr>
+                <td class="label"><span class="red pd_10">*</span>真实姓名：</td>
+                <td><input type="text" name="items[name]" value="<?php echo $items['name'] ?>" /><?php echo $emsg['name']?></td>
+            </tr>
+            <tr>
+                <td class="label"><span class="red pd_10">*</span>所属用户组：</td>
+                <td>
+                    <?php echo $items['gid']?><?php echo $emsg['gid']?>
+                </td>
+            </tr>
+            <tr>
+                <td class="label"><span class="red pd_10">*</span>密　　码：</td>
+                <td><input type="password" name="items[passwd]" /></td>
+            </tr>
+            <tr>
+                <td class="label"><span class="red pd_10">*</span>确认密码：</td>
+                <td><input type="password" name="items[passwd1]" /><?php echo $emsg['passwd'] ?></td>
+            </tr>
+			<tr>
+                <td class="label">用户类型：</td>
+                <td>
+                    <?php echo $items['type']?><?php echo $emsg['type']?>
+                </td>
+            </tr>
+			<tr>
+                <td class="label">员工工号：</td>
+                <td><input type="text" name="items[job_no]" value="<?php echo $items['job_no'] ?>" /><?php echo $emsg['job_no']?></td>
+            </tr>
+            <tr>
+                <td class="label">渠道标识</td>
+                <td><input type="text" name="items[channel_code]" value="<?php echo $items['channel_code'] ?>" /><?php echo $emsg['channel_code']?></td>
+            </tr>
+			<tr>
+                <td class="label">昵称：</td>
+                <td><input type="text" name="items[nick_name]" value="<?php echo $items['nick_name'] ?>" /><?php echo $emsg['nick_name']?></td>
+            </tr>
+			<tr>
+                <td class="label">性别：</td>
+				<td>
+                    <?php echo $items['sex']?><?php echo $emsg['sex']?>
+                </td>
+            </tr>
+			<tr>
+                <td class="label">身份证号：</td>
+                <td><input type="text" name="items[id_no]" value="<?php echo $items['id_no'] ?>" /><?php echo $emsg['id_no']?></td>
+            </tr>
+			<tr>
+                <td class="label">联系电话：</td>
+                <td><input type="text" name="items[phone]" value="<?php echo $items['phone'] ?>" /><?php echo $emsg['phone']?></td>
+            </tr>
+			<tr>
+                <td class="label">qq：</td>
+                <td><input type="text" name="items[qq]" value="<?php echo $items['qq'] ?>" /><?php echo $emsg['qq']?></td>
+            </tr>
+			<tr>
+                <td class="label">rtx号：</td>
+                <td><input type="text" name="items[rtx]" value="<?php echo $items['rtx'] ?>" /><?php echo $emsg['rtx']?></td>
+            </tr>
+			<tr>
+                <td class="label">msn：</td>
+                <td><input type="text" name="items[msn]" value="<?php echo $items['msn'] ?>" /><?php echo $emsg['msn']?></td>
+            </tr>
+			<tr>
+                <td class="label">公司email账号：</td>
+                <td><input type="text" name="items[email]" value="<?php echo $items['email'] ?>" /><?php echo $emsg['email']?></td>
+            </tr>
+			<tr>
+                <td class="label">所属部门：</td>
+                <td><input type="text" name="items[department]" value="<?php echo $items['department'] ?>" /><?php echo $emsg['department']?></td>
+            </tr>
+			<tr>
+                <td class="label">入职日期：</td>
+                <td><input type="text" name="items[entry_time]" value="<?php echo $items['entry_time']?>" id="entry_time" /><?php echo $emsg['entry_time']?></td>
+            </tr>
+			<tr>
+                <td class="label">备注：</td>
+                <td><input type="text" name="items[remark]" value="<?php echo $items['remark'] ?>" /><?php echo $emsg['remark']?></td>
+            </tr>
+            <tr>
+                <td class="label"></td>
+                <td>
+                    <input type="submit" name="submit" class="bigBtn" value="提交" />
+                    <input type="button" class="bigBtn" value="返回" onclick="location.replace('<?php echo $goback?>');" />
+					<span class="red">（*号必填）</span>
+				</td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script>
+	$('#entry_time').datepick(); 
+</script>
+<?php $this->endBlock('content');?>

@@ -1,0 +1,43 @@
+<?php $this->setLayout('main');?>
+
+<?php $this->block('title');?>修改密码<?php $this->endBlock('title');?>
+
+<?php $this->block('content');?>
+<script type="text/javascript">
+    function check_pwd() {
+        var passwd  = $('#passwd').val();
+        var passwd2 = $('#passwd2').val();
+        if(passwd2 != passwd) {
+            alert('两次输入密码不一致!');
+        }
+    }
+</script>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div style="padding-top:20px;" class="box-body">
+                <form class="form-horizontal" method="post">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" >密码:</label>
+                        <div class="col-sm-6">             
+                            <input class="form-control" type="text" id="passwd" name="items[passwd]" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" >确认密码:</label>
+                        <div class="col-sm-6">             
+                            <input class="form-control" type="text" id="passwd2" name="items[passwd2]" onblur="check_pwd()"/>
+                        </div>
+                    </div>   
+                    <div class="box-footer">
+                            <div class="col-sm-2"></div>
+                            <button class="btn btn-info" type="submit" name="submit">提交</button>
+                            <button type="button" class="btn btn-info" onclick="history.go(-1)">返回</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<?php $this->endBlock('content');?>
+

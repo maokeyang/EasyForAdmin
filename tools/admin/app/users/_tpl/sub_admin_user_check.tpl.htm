@@ -1,0 +1,72 @@
+<?php $this->block('pager');?>
+<?php echo $page;?>
+<?php $this->endBlock('pager');?>    
+<?php $this->block('pager_length');?>  
+<?php echo $pager_limit;?>
+<script>
+$('#sel_limit').val('<?php echo $limit;?>');
+</script>
+<?php $this->endBlock('pager_length');?>
+<div class="box-body">
+    <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+        <?php $this->loadBlock('pager_length');?>
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-bordered table-striped dataTable no-footer" id="example1" role="grid" aria-describedby="example1_info">
+                    <thead>
+                        <tr role="row">
+
+                            <th class="<?php echo $this->get_sorting('user_name');?>" order_by="user_name" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-sort="ascending" aria-label="登录名: activate to sort column descending">登录名</th>
+
+                            <th class="<?php echo $this->get_sorting('true_name');?>" order_by="true_name" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-label="真实姓名: activate to sort column ascending">真实姓名</th>
+
+                            <th class="<?php echo $this->get_sorting('phone');?>" order_by="phone" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-label="联系电话: activate to sort column ascending">联系电话</th>
+
+                            <th class="<?php echo $this->get_sorting('qq');?>" order_by="qq" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-label="qq号: activate to sort column ascending">qq号</th>
+
+                            <th class="<?php echo $this->get_sorting('email');?>" order_by="email" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-label="email: activate to sort column ascending">email</th>
+
+                            <th class="<?php echo $this->get_sorting('company_name');?>" order_by="company_name" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-label="所在公司: activate to sort column ascending">所在公司</th>
+
+                            <th class="<?php echo $this->get_sorting('create_time');?>" order_by="create_time" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-label="注册日期: activate to sort column ascending">注册日期</th>
+
+                            <th class="" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="width: 70px;" aria-label="操作: activate to sort column ascending">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    <?php if($data){ ?>
+                    <?php foreach($data as $k=>$v){?>
+                    <tr role="row" class="<?php echo $k%2?'odd':'even'?>">
+
+                        <td class="sorting_1"><?php echo $v['user_name'];?></td>
+
+                        <td ><?php echo $v['true_name'];?></td>
+
+                        <td ><?php echo $v['phone'];?></td>
+
+                        <td ><?php echo $v['qq'];?></td>
+
+                        <td ><?php echo $v['email'];?></td>
+
+                        <td ><?php echo $v['company_name'];?></td>
+
+                        <td ><?php echo date('Y-m-d H:i:s',$v['create_time']);?></td>
+
+                        <td>
+                            <a class="btn btn-success btn-xs" href="?mod=users&act=admin_user_check_edit&do=edit&user_id=<?php echo $v[user_id];?>">审核</a>
+                            <a class="btn btn-warning btn-xs" href="javascript:void(0);" onclick="confirmDel('<?php echo $v['user_id'];?>');">拒绝</a>
+                        </td>
+                    </tr>
+                    <?php }?>
+                    <?php }else{ ?>
+                    <tr class="odd"><td valign="top" colspan="30" class="dataTables_empty">暂无数据...</td></tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <?php $this->loadBlock('pager');?>
+    </div>
+</div>	
+<!-- /.box-body -->

@@ -1,0 +1,51 @@
+<?php $this->block('pager');?>
+<?php echo $page;?>
+<?php $this->endBlock('pager');?>    
+<?php $this->block('pager_length');?>  
+<?php echo $pager_limit;?>
+<script>
+$('#sel_limit').val('<?php echo $limit;?>');
+</script>
+<?php $this->endBlock('pager_length');?>
+<div class="box-body">
+    <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+        <?php $this->loadBlock('pager_length');?>
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-bordered table-striped dataTable no-footer" id="example1" role="grid" aria-describedby="example1_info">
+                    <thead>
+                        <tr role="row">
+
+                            <th class="<?php echo $this->get_sorting('group_name');?>" order_by="group_name" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-sort="ascending" aria-label="用户组名称: activate to sort column descending">用户组名称</th>
+
+                            <th class="<?php echo $this->get_sorting('create_time');?>" order_by="create_time" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="" aria-sort="ascending" aria-label="创建时间: activate to sort column descending">创建时间</th>
+                            <th class="" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="width: 70px;" aria-label="操作: activate to sort column ascending">操作</th>
+                        </tr>                    
+                    </thead>
+                    <tbody>
+
+                    <?php if($data){ ?>
+                    <?php foreach($data as $k=>$v){?>
+                    <tr role="row" class="<?php echo $k%2?'odd':'even'?>">
+
+                        <td class="sorting_1"><?php echo $v['group_name'];?></td>         
+
+                        <td ><?php echo date('Y-m-d H:i:s',$v['create_time']);?></td>
+
+                        <td>
+                            <a class="btn btn-success btn-xs" href="?mod=user_group&act=edit&gid=<?php echo $v['group_id'];?>">编辑</a>
+                            <a class="btn btn-warning btn-xs" href="javascript:void(0);" onclick="confirmDel('<?php echo $v['group_id'];?>');">删除</a>
+                        </td>
+                    </tr>
+                    <?php }?>
+                    <?php }else{ ?>
+                    <tr class="odd"><td valign="top" colspan="30" class="dataTables_empty">暂无数据...</td></tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <?php $this->loadBlock('pager');?>
+    </div>
+</div>	
+<!-- /.box-body -->

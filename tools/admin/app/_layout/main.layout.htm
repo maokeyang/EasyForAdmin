@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>后台管理系统</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<!-- Bootstrap 3.3.5 -->
+<link rel="stylesheet" href="style/bootstrap/css/bootstrap.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet" type="text/css" href="style/dist/css/font-awesome.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet" type="text/css" href="style/dist/css/ionicons.min.css">
+<!--<link rel="stylesheet" type="text/css" href="style/dist/css/ui.css">-->
+<link rel="stylesheet" type="text/css" href="style/tb_icon/iconfont.css">
+
+<!-- DataTables -->
+<link rel="stylesheet" href="style/plugins/datatables/dataTables.bootstrap.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="style/dist/css/AdminLTE.min.css">
+<link rel="stylesheet" href="style/dist/css/ui.css">
+
+<!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+<link rel="stylesheet" href="style/dist/css/skins/skin-blue-light.css">
+<!-- Bootstrap Datetimepicker -->
+<link rel="stylesheet" href="style/bootstrap/css/bootstrap-datetimepicker.css">
+<link rel="stylesheet" href="style/city-picker/css/cityPicker.css">
+<link rel="stylesheet" href="style/bootstrap/css/daterangepicker.css">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<!-- jQuery 2.1.4 -->
+<script src="style/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<script src="style/plugins/jQueryUI/jquery-ui.min.js"></script>
+<script src="style/js/ajaxfileupload.js"></script>
+
+<?php $this->loadBlock('header'); ?>
+</head>
+<body class="hold-transition skin-blue-light sidebar-mini">
+<div class="wrapper">
+  <header class="main-header">
+    <!-- Logo -->
+    <a href="#" class="logo">
+    <!-- mini logo for sidebar mini 50x50 pixels -->
+    <span class="logo-lg">后台管理系统</span> </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top" role="navigation">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"> <span class="sr-only"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <!-- User Account: style can be found in dropdown.less -->
+
+          <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i><?php echo $_SESSION['true_name']?> <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="?mod=default&act=logoff">退出登录</a></li>
+              <li><a href="?mod=users&act=change">修改密码</a></li>
+              <!--<li><a href="#">用户组管理</a></li>
+              <li><a href="#">文件上传</a></li>-->
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+      <!-- search form -->
+      <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="搜索...">
+          <span class="input-group-btn">
+          <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+          </span> </div>
+      </form>
+      <!-- /.search form -->
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul id="ul_menu" class="sidebar-menu">
+        <li class="header">功能菜单</li>
+		<?php
+        $menu = App::getMenu();		
+        foreach($menu as $mkey => $mvalue):
+      	?>
+        <li class="treeview"> <a href="#"> <i class="<?php echo $mvalue['css'];?>"><?php echo isset($mvalue['icon_val'])?$mvalue['icon_val']:'';?></i> <span style="color: #777;"><?php echo $mvalue['title'];?></span> <i class="fa fa-angle-left pull-right"></i> </a>
+          <ul class="treeview-menu">
+		  <?php foreach($mvalue['sub'] as $skey => $svalue): 
+			if($svalue['is_show']){?>
+            <li><a href="<?php echo $svalue['url'];?>"><i class="fa "></i> <?php echo $svalue['title'];?></a></li>
+			<?php }?> 
+			<?php endforeach;?>
+          </ul>
+        </li>
+		<?php endforeach;?>
+		</ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+<?php include APP_DIR.'/_layout/topmenu.layout.htm';?>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1 class="with-border"><?php $this->loadBlock('title'); ?></h1>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+	<?php $this->loadBlock('content');?>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <div class="pull-right hidden-xs"> <b>后台版本号</b> 2.0</div>
+</div>
+<!-- ./wrapper -->
+<!-- Bootstrap 3.3.5 -->
+<script src="style/bootstrap/js/bootstrap.min.js"></script>
+<script src="style/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+<script src="style/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="style/bootstrap/js/bootstrap.autocomplete.js"></script>
+<script src="style/bootstrap/js/moment.js"></script>
+<script src="style/bootstrap/js/daterangepicker.js"></script>
+
+<!-- DataTables -->
+<script src="style/plugins/datatables/jquery.dataTables.js"></script>
+<script src="style/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="style/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="style/plugins/fastclick/fastclick.min.js"></script>
+
+<!-- AdminLTE App -->
+<script src="style/dist/js/app.min.js"></script>
+<!-- datetimepicker -->
+
+<!-- Bootstrap Datetimepicker -->
+<!-- 原有插件 -->
+<script type="text/javascript" src="style/js/jquery.json.js"></script>
+<script type="text/javascript" src="style/js/ZeroClipboard.min.js"></script>
+<!-- script type="text/javascript" src="style/js/gridview.js"></script-->
+<!--script type="text/javascript" src="style/js/jqmessagebox.js"></script-->
+<script type="text/javascript" src="style/js/admin.js"></script>
+<!-- page script -->
+<script>
+</script>
+<?php $this->loadBlock('script');?>
+</body>
+</html>

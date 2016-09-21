@@ -1,0 +1,170 @@
+<?php $this->setLayout('main');?>
+<?php $this->block('title');echo $title;$this->endBlock('title');?>
+<?php $this->block('navigation');?>
+<ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-home"></i> 首页</a></li>
+    <li><a href="#"><?php echo $parent_menu;?></a></li>
+    <li class="active"><?php echo $current_menu;?></li>
+</ol>
+<?php $this->endBlock('navigation');?>
+<?php $this->block('content');?>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div style="padding-top:20px;" class="box-body">
+                <form class="form-horizontal" method="post">
+
+                    <input type="hidden" name="title" value="<?php echo $title;?>"/>    
+                                                    
+                    <input type="hidden" name="data[user_id]" value="<?php echo $data['user_id']?>"/>
+
+                    <div class="form-group">
+                           
+                        <label class="col-sm-2 control-label" for="text_user_name">登录名:</label>
+                        <div class="col-sm-6">             
+                            <input id="text_user_name" class="form-control" <?php if($this->_input['do']=='edit'){?>disabled="disabled"<?php }?> type="text" name="data[user_name]" value="<?php echo  $data['user_name']?>"/><span class="txt-impt"><?php echo $emsg['user_name']?></span>
+                        </div>
+                    </div>      
+                                         
+                    <div class="form-group">
+                           
+                        <label class="col-sm-2 control-label" for="text_user_pass">登录密码:</label>
+                        <div class="col-sm-6">             
+                            <input id="text_user_pass" class="form-control" type="text" name="data[user_pass]" value="" <?php if($this->_input['do']=='edit'){?>placeholder="留空表示不修改密码"<?php }?>/><span class="txt-impt"><?php echo $emsg['user_pass']?></span>
+                        
+                        </div>
+                    </div>      
+                                         
+                    <div class="form-group">
+                           
+                        <label class="col-sm-2 control-label" for="text_job_no">员工工号:</label>
+                        <div class="col-sm-6">             
+                            <input id="text_job_no" class="form-control" type="text" name="data[job_no]" value="<?php echo  $data['job_no']?>"/><span class="txt-impt"><?php echo $emsg['job_no']?></span>
+                        
+                        </div>
+                    </div>      
+                                         
+                    <div class="form-group">
+                           
+                        <label class="col-sm-2 control-label" for="text_true_name">真实姓名:</label>
+                        <div class="col-sm-6">             
+                            <input id="text_true_name" class="form-control" type="text" name="data[true_name]" value="<?php echo  $data['true_name']?>"/><span class="txt-impt"><?php echo $emsg['true_name']?></span>
+                        
+                        </div>
+                    </div>      
+                                         
+                    <div class="form-group">
+                           
+                        <label class="col-sm-2 control-label" for="text_nick_name">昵称:</label>
+                        <div class="col-sm-6">             
+                            <input id="text_nick_name" class="form-control" type="text" name="data[nick_name]" value="<?php echo  $data['nick_name']?>"/><span class="txt-impt"><?php echo $emsg['nick_name']?></span>
+                        
+                        </div>
+                    </div>      
+                                         
+                    <div class="form-group">
+                           
+                        <label class="col-sm-2 control-label" for="text_sex">性别:</label>
+                        <div class="col-sm-6">             
+
+                            <select id="text_sex" class="form-control" name="data[sex]">
+                                <option value="0" <?php echo 0 == $emsg['sex'] ? 'selected=selected' : '' ?>>女</option>
+                                <option value="1" <?php echo 1 == $emsg['sex'] ? 'selected=selected' : '' ?>>男</option>
+                            </select>
+                        </div>
+                    </div>      
+                                         
+                    <div class="form-group">
+                           
+                        <label class="col-sm-2 control-label" for="text_phone">联系电话:</label>
+                        <div class="col-sm-6">             
+                            <input id="text_phone" class="form-control" type="text" name="data[phone]" value="<?php echo  $data['phone']?>"/><span class="txt-impt"><?php echo $emsg['phone']?></span>
+                        
+                        </div>
+                    </div>      
+                                         
+                    <div class="form-group">
+                           
+                        <label class="col-sm-2 control-label" for="text_remark">备注:</label>
+                        <div class="col-sm-6">             
+                            <input id="text_remark" class="form-control" type="text" name="data[remark]" value="<?php echo  $data['remark']?>"/><span class="txt-impt"><?php echo $emsg['remark']?></span>
+                        
+                        </div>
+                    </div>      
+                                         
+                    <div class="form-group">
+                           
+                        <label class="col-sm-2 control-label" for="text_email">email:</label>
+                        <div class="col-sm-6">             
+                            <input id="text_email" class="form-control" type="text" name="data[email]" value="<?php echo  $data['email']?>"/><span class="txt-impt"><?php echo $emsg['email']?></span>
+                        
+                        </div>
+                    </div>      
+                                         
+                    <!--<div class="form-group">
+                           
+                        <label class="col-sm-2 control-label" for="text_status">状态:</label>
+                        <div class="col-sm-6">         
+ 
+                            <select id="text_status" name="data[status]" class="form-control">
+                                <option value="1" <?php echo 0 == $data['status'] ? 'selected=selected' : ''?>>启用</option>
+                                <option value="0" <?php echo 1 == $data['status'] ? 'selected=selected' : ''?>>禁用</option>
+                            </select>
+                        
+                        </div>
+                    </div>-->   
+                                         
+                    <div class="form-group">
+                           
+                        <label class="col-sm-2 control-label" for="text_group_id">用户组:</label>
+                        <div class="col-sm-6">             
+
+                        <select id="text_group_id" class="form-control" name="data[group_id]">
+
+                            <?php foreach ($user_group as $key => $value) {
+
+                            ?>
+                               <option value="<?php echo $value['group_id']?>" <?php echo $value['group_id'] == $data['group_id'] ? 'selected=selected' : ''?> ><?php echo $value['group_name']?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
+                        
+                        </div>
+                    </div>      
+                                         
+                    <!--<div class="form-group">
+                           
+                        <label class="col-sm-2 control-label" for="text_user_identity">渠道用户标识:</label>
+                        <div class="col-sm-6">             
+                            <input id="text_user_identity" class="form-control" type="text" name="data[user_identity]" value="<?php echo  $data['user_identity']?>"/><span class="txt-impt"><?php echo $emsg['user_identity']?></span>
+                        
+                        </div>
+                    </div> -->      
+                        
+                    <?php echo $do;?>
+
+                    <div class="box-footer">
+                        <div class="col-sm-2"></div>
+                        <button class="btn btn-info" type="submit" name="submit">提交</button>
+                        <button type="button" class="btn btn-default" onclick="location.replace('<?php echo Act_Admin_User_edit::GO_BACK?>');">返回</button>
+                    </div>
+                <!-- /.box-footer -->
+                </form>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+<?php $this->endBlock('content');?>
+<?php $this->block('script');?>
+<script>
+$('#text_entry_time').datetimepicker({
+    minView: "month", //选择日期后，不会再跳转去选择时分秒 
+    format: "yyyy-mm-dd", //选择日期后，文本框显示的日期格式 
+    language: 'zh-CN', //汉化 
+    autoclose:true //选择日期后自动关闭 
+}); 
+</script>
+<?php $this->endBlock('script');?>

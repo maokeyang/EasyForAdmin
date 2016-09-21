@@ -1,0 +1,62 @@
+<?php $this->setLayout('main');?>
+
+<?php $this->block('title');?>后台帐号列表<?php $this->endBlock('title');?>
+
+<?php $this->block('pager');?>
+<span class="pageIndex">
+    <?php echo $data['page_index']?>
+    <select name="limit" onchange="document.getElementById('mainForm').submit();">
+        <option value="<?php echo $limit?>" checked="checked">每页显示<?php echo $limit?>行</option>
+        <option value="" disabled="disabled">---</option>
+        <option value="30">30行</option>
+        <option value="50">50行</option>
+        <option value="100">100行</option>
+        <option value="200">200行</option>
+    </select>
+</span>
+<?php $this->endBlock('pager');?>
+
+<?php $this->block('content');?>
+<form id="mainForm" method="post">
+    <div class="searchPanel">
+        登录名：<input type="text" name="kw_user_name" value="<?php echo $kw['kw_user_name']?>" />
+        真实姓名：<input type="text" name="kw_true_name" value="<?php echo $kw['kw_true_name']?>" />
+        <input type="submit" value="搜索" class="btn btn-info" />
+		<input type="button" class="btn btn-info" value="添加帐号" onclick="location.replace('?mod=users&act=add');"/>
+    </div>
+    <div class="col-sm-12">
+        <table class="table table-bordered table-striped dataTable no-footer" id="gridview">
+            <thead>
+                <tr><td style="width:20px;" class="sorting"></td>
+                    <td>登录名</td>
+                    <td>状态</td>
+                    <td>所属用户组</td>
+                    <td>用户类型</td>
+                    <td>真实姓名</td>
+                    <td>操作</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($data['list'] as $v):?>
+                <tr>
+                    <td style="text-align:center;"><input name="id[]" class="hidden" type="checkbox" value="<?php echo $v['user_id']?>"><?php echo $v['user_id']?></td>
+                    <td><span class="label label-success"><?php echo $v['user_name']?></span></td>
+                    <td><?php echo $v['status'] == 0 ? '停用': '启用';?></td>
+                    <td><?php echo $v['group_name']?></td>
+                    <td><?php echo $v['user_type']?></td>
+                    <td><?php echo $v['true_name']?></td>
+                    <td><?php echo $v['action']?></td>
+                </tr>
+                <?php endforeach;?>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="9">
+                        <?php $this->loadBlock('pager')?>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</form>
+<?php $this->endBlock('content');?>
